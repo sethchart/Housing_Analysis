@@ -25,7 +25,7 @@ The model describes 65% of the variation in log price.
 ### Spatial Distribution of Price
 
 We investigated the relationship between price and location by mapping prices by latitude and longitude. We see that higher prices are centered around lake Washington, particularly around the center of lake Washington between the Madison Park and Clyde Hill neighborhoods. We identify latitude = 47.62 and longitude = -122.25 as the approximate center of this region of higher prices. 
-<img src='images/price_map.png'/>
+<img src='/images/price_map.png'/>
 
 ### Classification of Zip Codes by Price
 
