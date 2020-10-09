@@ -4,7 +4,7 @@ In this repository we analyze housing data from King County in Seattle. We produ
 
 ## Business Problem 
 
-For this project we identify our hypothetical stakeholder as King County Assessor [John Wilson](https://www.kingcounty.gov/depts/assessor/About-Us/Assessors-Bio.aspx). We are asked to use data from house sales in King County occurring between May 2, 2014 and May 27, 2015 to produce a model for house prices. This model will be used by the assessor to validate the existing property taxation model. 
+For this project we identify our hypothetical stakeholder as King County Assessor [John Wilson](https://www.kingcounty.gov/depts/assessor/About-Us/Assessors-Bio.aspx). We are asked to use data from house sales in King County occurring between May 2, 2014 and May 27, 2015 to produce a model for house prices. This model will be used by the assessor to validate the existing property taxation model.
 
 ## Key Insights
 In this section we briefly summarise our findings as they relate to the business problem.
@@ -20,7 +20,12 @@ Our linear model takes the form:
 
 <img src="https://render.githubusercontent.com/render/math?math=y=0.37-0.29x_{1}-0.12x_{2}%2B1.44x_{3}\%2B0.08x_{4}">
 
+The model describes 65% of the variation in log price.
+
 ### Spatial Distribution of Price
+
+We investigated the relationship between price and location by mapping prices by latitude and longitude. We see that higher prices are centered around lake Washington, particularly around the center of lake Washington between the Madison Park and Clyde Hill neighborhoods. We identify latitude = 47.62 and longitude = -122.25 as the approximate center of this region of higher prices. 
+<img src='images/price_map.png'/>
 
 ### Classification of Zip Codes by Price
 
