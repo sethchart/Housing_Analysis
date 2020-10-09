@@ -9,7 +9,9 @@ For this project we identify our hypothetical stakeholder as King County Assesso
 ## Key Insights
 In this section we briefly summarise our findings as they relate to the business problem.
 ### Model
-<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
+
+We produced a linear model for the base 10 logarithm of price. That is, if the price of a house is <img src="https://render.githubusercontent.com/render/math?math=P">, then the target for our linear model is <img src="https://render.githubusercontent.com/render/math?math=y = \log_{10} P">. Our model incorporates four input variables, which we will denote as <img src="https://render.githubusercontent.com/render/math?math= x_{k}"> for <img src="https://render.githubusercontent.com/render/math?math=k = 1, 2, 3, 4.">
+
 ### Spatial Distribution of Price
 
 ### Classification of Zip Codes by Price
