@@ -18,7 +18,7 @@ We produced a linear model for the base 10 logarithm of price. That is, if the p
 
 Our linear model takes the form:
 
-<img src="https://render.githubusercontent.com/render/math?math=y=0.37-0.29x_{1}-0.12x_{2}+1.44x_{3}&#43;0.08x_{4}">
+<img src="https://render.githubusercontent.com/render/math?math=y=0.37-0.29x_{1}-0.12x_{2}+1.44x_{3}\+0.08x_{4}">
 
 ### Spatial Distribution of Price
 
