@@ -28,16 +28,18 @@ We investigated the relationship between price and location by mapping prices by
 <img src='images/price_map.png'/>
 
 ### Classification of Zip Codes by Price
+We investigated the median price by zip code in King County. We found that 98039 had the highest median price at $1,894,941 and that 98168 had the lowest median price at $235,000. For the purposes of modeling, we chose to classify zip codes as low price if their median price was in the bottom third of the distribution of median prices by zip code. Similarly, zip codes in the middle third were categorized as medium price and zip codes in the top third were categorized as high price. 
 <img src='images/zip_boxplots.png'/>
 ### Bathroom to Bedroom Ratio
+In the process of modeling we found that, unsurprisingly, the number of bathrooms that a house has is highly correlated with the number of bedrooms as well as the size of the house. In order to extract some useable information from the provided data, we computed the number of bathrooms per bedroom. We found that a model using number of bedrooms and number of bathrooms as predictors of log price described 28% of the variation in log price, but suffered from high variance inflation factors. Replacing number of bedrooms with the number of bathrooms per bedroom produced a model that described %26 of the variation in log price, while reducing variance inflation factors by about half and brining them within an acceptable range.
 
-## Data Validation
-
-## Data Cleaning 
-
-## Feature Engineering
-
-## Model Selection
+## Data Validation and Cleaning
+During data validation we identified the following issues in the raw data. 
+ * We found missing values in the `veiw` variable, which described the quality of the views available from the house. We chose to fill missing values with zeroes under the assumption that view had no appreciable influence in the price of these houses. 
+ * We found missing values in the `waterfront` variable, which was an indicator variable for proximity to the waterfront. We filled missing values with zeroes (False) under the assumption that the variable was more likely to be reported correctly for waterfront homes and that the vast majority of houses are not on the waterfront.
+ * We found that the `yr_renovated` variable contained both missing values and zeros indication that the house had not been renovated. We chose to fill both missing values and zeroes with False. 
+ * The `date` variable was a formatted string. To facilitate data processing, we converted this variable to a datetime object.
+ * We found that the `sqft_basement` variable used `?` as a placeholder for missing values. We converted `?`s to zeroes under the assumption that houses with missing information about the basement did not have sufficiently finished basements to substantively influence the price of the house.
 
 ## Model Validation 
 
