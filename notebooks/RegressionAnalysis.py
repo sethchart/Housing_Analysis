@@ -17,26 +17,24 @@ class RegressionAnalysis(object):
 
 
     def __init__(self, data, target):
-        self.X = data.drop(target, axis=1)
-        self.y = data[target]
+        self.data = data
+        self.target = target
+        self.X = self.data.drop(target, axis=1)
+        self.y = self.data[target]
 
 
-    def load_data(self, data, target):
-        """Provide the preprocessed data as a pandas dataframe and provide the
-        name of the target variable that will be predicted by the linear model."""
-        self.X = data.drop(target, axis=1)
-        self.y = data['target']
-
-
-    def make_pair_plot(self, df):
+    def make_pair_plot(self):
         """Given a dataframe make a pairplot of all variables."""
-        return sns.pairplot(data=df)
+        return sns.pairplot(data=self.data)
 
 
-    def make_correlation_plot(self, df):
+    def make_correlation_plot(self):
         """Given a dataframe make heatmap of pairwise correlation."""
-        corr = df.corr()
+        corr = self.data.corr()
         return sns.heatmap(corr, annot=True, cmap='Blues')
+
+    def make_test_train_split(self):
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
 
 
     def fit_model(self, X_train, y_train, fit_intercept=True):
@@ -125,31 +123,19 @@ class _TestRegressionAnalysis(RegressionAnalysis):
 
     def __init__(self):
         np.random.seed(42)
-        self.data = pd.DataFrame(np.random.randint(0,100,size=(10, 4)), columns=list('ABCD'))
-        self.target = 'A'
-        super().__init__(self.data , self.target)
+        self.test_data = pd.DataFrame(np.random.randint(0,100,size=(10, 4)), columns=list('ABCD'))
+        self.test_target = 'A'
+        super().__init__(self.test_data , self.test_target)
 #        self.linreg = LinearRegression(fit_intercept=True)
 #        self.model = self.linreg.fit(self.X, self.y)
 #        self.y_hat = self.model.predict(self.X)
 #        self.residuals = self.y-self.y_hat
 
 
-    def test_load_data(self):
-        """Test the load_data function."""
-        try:
-            ra.load_data(self.df, self.target)
-            test1 = ra.X == self.df.drop('A', axis=1)
-            test2 = ra.y == self.df['A']
-            test_passes = test1 and test2
-        except:
-            test_passes = False
-        return test_passes
-
-
-    def test_make_distribution_plot(self):
+    def test_make_pair_plot(self):
         """Test the make_pair_plot function."""
         try:
-            self.make_pair_plot(self.df);
+            self.make_pair_plot();
             test_passes = True
         except:
             test_passes = False
@@ -159,7 +145,7 @@ class _TestRegressionAnalysis(RegressionAnalysis):
     def test_make_correlation_plot(self):
         """Test the make_corelation_plot function."""
         try:
-            self.make_correlation_plot(self.df);
+            self.make_correlation_plot()
             test_passes = True
         except:
             test_passes = False
