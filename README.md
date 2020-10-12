@@ -28,7 +28,7 @@ We investigated the relationship between price and location by mapping prices by
 <img src='images/price_map.png'/>
 
 ### Classification of Zip Codes by Price
-
+<img src='images/zip_boxplots.png'/>
 ### Bathroom to Bedroom Ratio
 
 ## Data Validation
