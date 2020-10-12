@@ -16,14 +16,16 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor as vi
 class RegressionAnalysis(object):
 
 
-    def __init__(self):
-        self.cleaned_data_path = os.path.abspath('data/cleaned.csv')
+    def __init__(self, data, target):
+        self.X = data.drop(target, axis=1)
+        self.y = data[target]
 
 
-    def load_data(self):
-        """Load the cleaned data as a data frame."""
-        df = pd.read_csv(self.cleaned_data_path)
-        return df
+    def load_data(self, data, target):
+        """Provide the preprocessed data as a pandas dataframe and provide the
+        name of the target variable that will be predicted by the linear model."""
+        self.X = data.drop(target, axis=1)
+        self.y = data['target']
 
 
     def make_pair_plot(self, df):
@@ -122,22 +124,23 @@ class _TestRegressionAnalysis(RegressionAnalysis):
 
 
     def __init__(self):
-        super().__init__()
         np.random.seed(42)
-        self.df = pd.DataFrame(np.random.randint(0,100,size=(10, 4)), columns=list('ABCD'))
-        self.X = self.df.drop('A', axis=1)
-        self.y = self.df['A']
-        self.linreg = LinearRegression(fit_intercept=True)
-        self.model = self.linreg.fit(self.X, self.y)
-        self.y_hat = self.model.predict(self.X)
-        self.residuals = self.y-self.y_hat
+        self.data = pd.DataFrame(np.random.randint(0,100,size=(10, 4)), columns=list('ABCD'))
+        self.target = 'A'
+        super().__init__(self.data , self.target)
+#        self.linreg = LinearRegression(fit_intercept=True)
+#        self.model = self.linreg.fit(self.X, self.y)
+#        self.y_hat = self.model.predict(self.X)
+#        self.residuals = self.y-self.y_hat
 
 
     def test_load_data(self):
         """Test the load_data function."""
-        test_passes = True
         try:
-            df = self.load_data()
+            ra.load_data(self.df, self.target)
+            test1 = ra.X == self.df.drop('A', axis=1)
+            test2 = ra.y == self.df['A']
+            test_passes = test1 and test2
         except:
             test_passes = False
         return test_passes
