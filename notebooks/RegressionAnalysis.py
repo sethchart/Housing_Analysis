@@ -23,6 +23,9 @@ class Model(object):
         self.y_hat_train = self._predict_target(self.X_train, self.model)
         self.residuals_train = self._compute_residuals(self.y_train,
                                                       self.y_hat_train)
+        self.y_hat_test = self._predict_target(self.X_test, self.model)
+        self.residuals_test = self._compute_residuals(self.y_test,
+                                                      self.y_hat_test)
 #Public methods
 
     def make_pair_plot(self):
