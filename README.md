@@ -1,115 +1,62 @@
-# Phase 2 Project
+# Housing Market Analysis
 
-## Introduction
+In this repository we analyze housing data from King County in Seattle. We produce a regression model for house price and investigate the factors that influence price.
 
-In this lesson, we review the guidelines for the Phase 2 Project.
+## Business Problem 
 
-## Objectives
+For this project we identify our hypothetical stakeholder as King County Assessor [John Wilson](https://www.kingcounty.gov/depts/assessor/About-Us/Assessors-Bio.aspx). We are asked to use data from house sales in King County occurring between May 2, 2014 and May 27, 2015 to produce a model for house prices. This model will be used by the assessor to validate the existing property taxation model.
 
-You will be able to:
+## Key Insights
+In this section we briefly summarise our findings as they relate to the business problem.
+### Model
 
-* Start your Phase 2 Project
-* Check that your project meets the requirements
-* Submit your project materials in Canvas
-* Prepare for your project review
+We produced a linear model for the base 10 logarithm of price. That is, if the price of a house is <img src="https://render.githubusercontent.com/render/math?math=P">, then the target for our linear model is <img src="https://render.githubusercontent.com/render/math?math=y = \log_{10}(P)">. Our model incorporates four input variables, which we will denote as <img src="https://render.githubusercontent.com/render/math?math=x_{k}"> for <img src="https://render.githubusercontent.com/render/math?math=k = 1, 2, 3, 4."> Each variable is described below.
+ 1. The variable <img src="https://render.githubusercontent.com/render/math?math=x_{1}"> is an indicator variable that is 1 if the house is in one of zip codes that we have identified as having low median price and 0 otherwise.
+ 2. The variable <img src="https://render.githubusercontent.com/render/math?math=x_{2}"> is an indicator variable that is 1 if the house is in one of zip codes that we have identified as having intermediate median price and 0 otherwise. Note that when both indicator variables are zero, the house is in one of the zip codes that we have identified as having high median price.
+ 3. The variable <img src="https://render.githubusercontent.com/render/math?math=x_{3}"> is a continuous variable that describes the total livable square footage of the houses 15 nearest neighbors. This variable has been Box-Cox transformed with parameter <img src="https://render.githubusercontent.com/render/math?math=\lambda = -0.21">.
+ 4. The variable <img src="https://render.githubusercontent.com/render/math?math=x_{4}"> is a continuous variable that describes the number of bathrooms per bedroom in the house. This variable has been Box-Cox transformed with parameter <img src="https://render.githubusercontent.com/render/math?math=\lambda = 0.21">.
 
-## Project Overview
+Our linear model takes the form:
 
-Another module down--you're almost half way there!
+<img src="https://render.githubusercontent.com/render/math?math=y=0.37-0.29x_{1}-0.12x_{2}%2B1.44x_{3}\%2B0.08x_{4}">
 
-![awesome](https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-2-project-online/master/halfway-there.gif)
+The model describes 65% of the variation in log price.
 
-All that remains in Phase 2 is to put our newfound data science skills to use with a large project! You should expect this project to take between 20 and 25 hours of solid, focused effort. If you're done way quicker, go back and dig in deeper or try some of the optional "level up" suggestions. If you're worried that you're going to get to 30 hrs and still not even have the data imported, reach out to an instructor in Slack ASAP to get some help!
+### Spatial Distribution of Price
 
-### The Data
+We investigated the relationship between price and location by mapping prices by latitude and longitude. We see that higher prices are centered around lake Washington, particularly around the center of lake Washington between the Madison Park and Clyde Hill neighborhoods. We identify latitude = 47.62 and longitude = -122.25 as the approximate center of this region of higher prices. 
+<img src='images/price_map.png'/>
 
-For this project, you'll be working with the King County House Sales dataset. We've modified the dataset to make it a bit more fun and challenging.  The dataset can be found in the file `kc_house_data.csv` in the data folder in this repo.
+### Classification of Zip Codes by Price
+We investigated the median price by zip code in King County. We found that 98039 had the highest median price at $1,894,941 and that 98168 had the lowest median price at $235,000. For the purposes of modeling, we chose to classify zip codes as low price if their median price was in the bottom third of the distribution of median prices by zip code. Similarly, zip codes in the middle third were categorized as medium price and zip codes in the top third were categorized as high price. 
+<img src='images/zip_boxplots.png'/>
+### Bathroom to Bedroom Ratio
+In the process of modeling we found that, unsurprisingly, the number of bathrooms that a house has is highly correlated with the number of bedrooms as well as the size of the house. In order to extract some useable information from the provided data, we computed the number of bathrooms per bedroom. We found that a model using number of bedrooms and number of bathrooms as predictors of log price described 28% of the variation in log price, but suffered from high variance inflation factors. Replacing number of bedrooms with the number of bathrooms per bedroom produced a model that described %26 of the variation in log price, while reducing variance inflation factors by about half and brining them within an acceptable range.
 
-The description of the column names can be found in the `column_names.md` file in the data folder in this repo. As with most real world data sets, the column names are not perfectly described, so you'll have to do some research or use your best judgment if you have questions relating to what the data means.
+## Data Validation and Cleaning
+During data validation we identified the following issues in the raw data. 
+ * We found missing values in the `veiw` variable, which described the quality of the views available from the house. We chose to fill missing values with zeroes under the assumption that view had no appreciable influence in the price of these houses. 
+ * We found missing values in the `waterfront` variable, which was an indicator variable for proximity to the waterfront. We filled missing values with zeroes (False) under the assumption that the variable was more likely to be reported correctly for waterfront homes and that the vast majority of houses are not on the waterfront.
+ * We found that the `yr_renovated` variable contained both missing values and zeros indication that the house had not been renovated. We chose to fill both missing values and zeroes with False. 
+ * The `date` variable was a formatted string. To facilitate data processing, we converted this variable to a datetime object.
+ * We found that the `sqft_basement` variable used `?` as a placeholder for missing values. We converted `?`s to zeroes under the assumption that houses with missing information about the basement did not have sufficiently finished basements to substantively influence the price of the house.
 
-You'll clean, explore, and model this dataset with a multivariate linear regression to predict the sale price of houses as accurately as possible.
+## Model Validation 
 
-### Business Problem
+### Linearity
 
-For this project, it will be up to you to define a stakeholder and business problem appropriate to this dataset.
+### Normality of Residuals
 
-## Deliverables
+### Uniform Variance of Residuals
 
-There are four deliverables for this project:
+### Linear Independence of Inputs
 
-1. A **GitHub repository**
-2. A **Jupyter Notebook**
-3. A non-technical presentation **slide deck**
-4. A non-technical presentation **recording**
+### Significance of Parameters
 
-Keep in mind that the audience for these deliverables is not only your teacher, but also potential employers. Employers will look at your project deliverables to evaluate multiple skills, including coding, modeling, communication, and domain knowledge. You will want to polish these as much as you can, both during the course and afterwards.
+### Measures of Model Quality
 
-### GitHub Repository
+## Points of Interest
 
-Your GitHub repository is the public-facing version of your project that your instructors and potential employers will see - make it as accessible as you can. At a minimum, it should contain all your project files and a README.md file that summarizes your project and helps visitors navigate the repository.
+### Test Driven Design
 
-### Jupyter Notebook
-
-Your Jupyter Notebook is the primary source of information about your analysis. At a minimum, it should contain or import all of the code used in your project and walk the reader through your project from start to finish. You may choose to use multiple Jupyter Notebooks in your project, but you should have one that provides a full project overview as a point of entry for visitors.
-
-For this project, your Jupyter Notebook should meet the following specifications:
-
-#### Organization/Code Cleanliness
-
-* The notebook should be well organized, easy to follow,  and code should be commented where appropriate.  
-    * Level Up: The notebook contains well-formatted, professional looking markdown cells explaining any substantial code.  All functions have docstrings that act as professional-quality documentation
-* The notebook is written for technical audiences with a way to both understand your approach and reproduce your results. The target audience for this deliverable is other data scientists looking to validate your findings.
-
-#### Visualizations & EDA
-
-* Your project contains at least 4 meaningful data visualizations, with corresponding interpretations. All visualizations are well labeled with axes labels, a title, and a legend (when appropriate)  
-* You pose at least 3 meaningful questions and answer them through EDA.  These questions should be well labeled and easy to identify inside the notebook.
-    * **Level Up**: Each question is clearly answered with a visualization that makes the answer easy to understand.   
-* Your notebook should contain 1 - 2 paragraphs briefly explaining your approach to this project.
-
-#### Model Quality/Approach
-
-* Your model should not include any predictors with p-values greater than .05.  
-* Your notebook shows an iterative approach to modeling, and details the parameters and results of the model at each iteration.  
-    * **Level Up**: Whenever necessary, you briefly explain the changes made from one iteration to the next, and why you made these choices.  
-* You provide at least 1 paragraph explaining your final model.   
-* You pick at least 3 coefficients from your final model and explain their impact on the price of a house in this dataset.   
-
-### Non-Technical Presentation Slides and Recording
-
-Your non-technical presentation is your opportunity to communicate clearly and concisely about your project and it's real-world relevance. The target audience should be people with limited technical knowledge who may be interested in leveraging your project. For Phase 1, these would be Microsoft executives interested in making decisions about movie development.
-
-Your presentation should:
-
-* Contain between 5 - 10 professional-quality slides.  
-    * **Level Up**: The slides should use visualizations whenever possible, and avoid walls of text.
-* Take no more than 5 minutes to present.   
-* Avoid technical jargon and explain the results in a clear, actionable way for non-technical audiences.
-
-**_Based on the results of your models, your presentation should discuss at least two concrete features that highly influence housing prices._**
-
-We recommend using Google Slides, PowerPoint or Keynote to create your presentation slides. We recommend using Zoom to record your live presentation to a local video file ([instructions here][]) - other options include Quicktime, PowerPoint, or Nimbus. Video files must be under 500 MB and formatted as 3GP, ASF, AVI, FLV, M4V, MOV, MP4, MPEG, QT, or WMV.
-
-## Getting Started
-
-Please start by reviewing this document. If you have any questions, please ask them in Slack ASAP so (a) we can answer the questions and (b) so we can update this document to make it clearer.
-
-**When you start on the project, reach out to an instructor immediately via Slack to let them know and schedule your project review.** If you're not sure who to schedule with, please ask in your cohort channel in Slack.
-
-Once you're done with the numbered topics in Phase 1, please start on the project. Do that by forking [the Phase 2 Project Repository][], cloning it locally, and working in the `student.ipynb` file. Make sure to also add and commit a PDF of your presentation to your repository with a file name of `presentation.pdf`.
-
-## Project Submission and Review
-
-Review [the Phase Project Submission and Review guidance][] to learn how to submit your project and how it will be reviewed. Your project must pass review for you to progress to the next Phase.
-
-**Please note: We need to receive your complete submission at least 24 hours before your review to confirm that you are prepared for the review. If you wish to revise your submission, please do so no later than 3 hours before your review so that we can have time to look at your updated materials.**
-
-## Summary
-
-The end-of-phase projects and project reviews are a critical part of the program. They give you a chance to both bring together all the skills you've learned into realistic projects and to practice key "business judgement" and communication skills that you otherwise might not get as much practice with.
-
-The projects are serious and important - they can be passed and they can be failed. Take the project seriously, put the time in, ask for help from your peers or instructors early and often if you need it, and treat the review as a job interview and you'll do great. We're rooting for you to succeed and we're only going to ask you to take a review again if we believe that you need to. We'll also provide open and honest feedback so you can improve as quickly and efficiently as possible.
-
-[the Phase 2 Project Repository]: https://github.com/learn-co-curriculum/dsc-phase-2-project-online
-[instructions here]: https://support.zoom.us/hc/en-us/articles/201362473-Local-recording
-[the Phase Project Submission and Review guidance]: https://github.com/learn-co-curriculum/dsc-project-submissions-online
+### Object Oriented Programming
