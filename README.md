@@ -47,7 +47,7 @@ Our model is essentially sound. It suffers from non-normality of residuals and d
 By choosing to model the log price of houses, we achieve linear relationships between our input variables and the target. More precisely, the bottom row of the pair plot below shows that there are no strong non-linear relationships between the input variables and the target. The pair plot also shows that there are no concerning non-linear relationships between input variables, which could be missed by assessing correlation or variance inflation factors.
 <img src='images/pair_plot.png'/>
 ### Normality of Residuals
-We check for normality of residuals by inspecting both a distribution plot and a QQ plot of the residuals. We also executed a Kolmogorov–Smirnov test for normality. All three, tests reject the hypothesis that the residuals are normally distributed. However we note that the t-scores for each of our coefficients exceeds 5 in absolute value. If we were to correct the distributions used in the hypothesis tests for our coefficients, there would not be a sufficient change in the p-values produced to threaten significance. Therefore, we claim that all of our coefficients are non-zero at the 95% confidence level. 
+We check for normality of residuals by inspecting both a distribution plot and a QQ plot of the residuals. We also executed a Kolmogorov–Smirnov test for normality. All three, tests reject the hypothesis that the residuals are normally distributed.
 
 #### Residual distribution plot
 <img src='images/residual_distribution_plot.png'/>
@@ -56,15 +56,24 @@ We check for normality of residuals by inspecting both a distribution plot and a
 <img src='images/residual_qq_plot.png'/>
 
 ### Uniform Variance of Residuals
+By inspecting the plot of residuals against the predicted target below we conclude that the variance of the residuals is independent of the predicted value. In other words, our model satisfies the homoscedasticity hypothesis. 
 
 ### Linear Independence of Inputs
+For all four of our input variables we computed variance inflation factors below 5. This indicates that our model does not suffer from linear dependence in the input variables.
 
 ### Significance of Parameters
+As note above our residuals are not normally distributed. However, we note that the t-scores for each of our coefficients exceeds 5 in absolute value. If we were to correct the distributions used in the hypothesis tests for our coefficients, there would not be a sufficient change in the p-values produced to threaten significance. Therefore, we claim that all of our coefficients are non-zero at the 95% confidence level. 
 
 ### Measures of Model Quality
+For our log price model we compute a training R^2 value of 64% and a testing R^2 value of 62%. While these values are lower than we would like, they are consistent between the training and testing data, which indicates that our model generalizes well. 
+
+We computed root mean squared error for our model when it is transformed from log price to price. We found that training RMSE was $268,742 and testing RMSE was $265,454. The size of this error means that our model is not sufficiently precise for our application. However, the degree of consistency between testing and training data further confirms the generalizability of our model. 
 
 ## Points of Interest
+Below I would like to highlight are a few aspects of this project that are not directly relevant to the business problem.
 
 ### Test Driven Design
+In this project I tried to implement test driven design, creating unit tests for each function. This practice helps to ensure that code is doing what we intend and makes refactoring code safer, since we can easily verify that refactored code is still doing what it is intended to do.
 
 ### Object Oriented Programming
+In python, creating and evaluating a linear regression model requires accessing methods from several libraries with differing approaches to managing the data and outputs. To facilitate a more streamlined workflow, we wrote a class that encapsulates the necessary linear regression functionality 
