@@ -9,6 +9,7 @@ For this project we identify our hypothetical stakeholder as King County Assesso
 ## Key Insights
 In this section we briefly summarise our findings as they relate to the business problem.
 ### Model
+[View Notebook](notebooks/PricingModel.ipynb)
 
 We produced a linear model for the base 10 logarithm of price. That is, if the price of a house is <img src="https://render.githubusercontent.com/render/math?math=P">, then the target for our linear model is <img src="https://render.githubusercontent.com/render/math?math=y = \log_{10}(P)">. Our model incorporates four input variables, which we will denote as <img src="https://render.githubusercontent.com/render/math?math=x_{k}"> for <img src="https://render.githubusercontent.com/render/math?math=k = 1, 2, 3, 4."> Each variable is described below.
  1. The variable <img src="https://render.githubusercontent.com/render/math?math=x_{1}"> is an indicator variable that is 1 if the house is in one of zip codes that we have identified as having low median price and 0 otherwise.
@@ -60,6 +61,12 @@ By inspecting the plot of residuals against the predicted target below we conclu
 
 #### Residuals vs Predicted Values
 <img src='images/predictions_residuals_plot.png'/>
+
+### Residuals Are Independent of Inputs
+By inspecting the plots below we determine that the residuals are independent of the input variables.
+
+#### Residuals vs Input Variables
+<img src='images/inputs_residuals_plot.png'/>
 
 ### Linear Independence of Inputs
 For all four of our input variables we computed variance inflation factors below 5. This indicates that our model does not suffer from linear dependence in the input variables.
