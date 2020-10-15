@@ -43,7 +43,7 @@ class Model(object):
         number_of_plots = len(self.X_train.columns)
         nrows = int(np.sqrt(number_of_plots))
         ncols = int(number_of_plots/nrows)
-        fig, axs = plt.subplots(nrows=nrows, ncols=ncols)
+        fig, axs = plt.subplots(nrows=nrows, ncols=ncols, squeeze=True)
         fig.set_figheight(6*nrows)
         fig.set_figwidth(8*ncols)
         for ax, col in zip(axs.flat, self.X_train.columns):
@@ -52,15 +52,16 @@ class Model(object):
             ax.set_xlabel(col.title())
             ax.set_ylabel('Residuals')
             ax.set_title(f'Residuals vs {col.title()}')
+        plt.tight_layout()
         return fig
 
 
     def plot_residuals_against_prediction(self):
         """Plot residuals against predicted values."""
-        fig = plt.figure() 
+        fig = plt.figure()
         ax = plt.axes()
         sns.scatterplot(
-            x=self.y_hat_train, 
+            x=self.y_hat_train,
             y=self.residuals_train,
             ax=ax
         )

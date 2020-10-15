@@ -58,6 +58,9 @@ We check for normality of residuals by inspecting both a distribution plot and a
 ### Uniform Variance of Residuals
 By inspecting the plot of residuals against the predicted target below we conclude that the variance of the residuals is independent of the predicted value. In other words, our model satisfies the homoscedasticity hypothesis. 
 
+#### Residuals vs Predicted Values
+<img src='images/predictions_residuals_plot.png'/>
+
 ### Linear Independence of Inputs
 For all four of our input variables we computed variance inflation factors below 5. This indicates that our model does not suffer from linear dependence in the input variables.
 
