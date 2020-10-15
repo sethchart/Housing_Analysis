@@ -18,9 +18,9 @@ We produced a linear model for the base 10 logarithm of price. That is, if the p
  4. The variable <img src="https://render.githubusercontent.com/render/math?math=x_{4}"> is a continuous variable that describes the number of bathrooms per bedroom in the house. This variable has been Box-Cox transformed with parameter <img src="https://render.githubusercontent.com/render/math?math=\lambda = 0.21">.
 
 Our linear model takes the form:
-<img src="https://render.githubusercontent.com/render/math?math=y=0.37-0.29x_{1}-0.12x_{2}%2B1.44x_{3}\%2B0.08x_{4}">
+<img src="https://render.githubusercontent.com/render/math?math=y=-0.34-0.29x_{1}-0.11x_{2}%2B1.74x_{3}\%2B0.09x_{4}">
 
-The model describes 65% of the variation in log price.
+The model describes 64% of the variation in log price.
 
 ### Spatial Distribution of Price
 [View Notebook](notebooks/PriceSpacialDistribution.ipynb)
