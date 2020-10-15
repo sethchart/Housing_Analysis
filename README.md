@@ -42,9 +42,10 @@ During data validation we identified the following issues in the raw data.
  * We found that the `sqft_basement` variable used `?` as a placeholder for missing values. We converted `?`s to zeroes under the assumption that houses with missing information about the basement did not have sufficiently finished basements to substantively influence the price of the house.
 
 ## Model Validation 
-
+Our model is essentially sound. It suffers from non-normality of residuals and does not describe as much of the variation in price as we would like.
 ### Linearity
-
+By choosing to model the log price of houses, we achieve linear relationships between our input variables and the target. More precisely, the bottom row of the pair plot below shows that there are no strong non-linear relationships between the input variables and the target. The pair plot also shows that there are no concerning non-linear relationships between input variables, which could be missed by assessing correlation or variance inflation factors.
+<img src='images/pair_plot.png'/>
 ### Normality of Residuals
 
 ### Uniform Variance of Residuals
