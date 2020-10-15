@@ -17,7 +17,6 @@ We produced a linear model for the base 10 logarithm of price. That is, if the p
  4. The variable <img src="https://render.githubusercontent.com/render/math?math=x_{4}"> is a continuous variable that describes the number of bathrooms per bedroom in the house. This variable has been Box-Cox transformed with parameter <img src="https://render.githubusercontent.com/render/math?math=\lambda = 0.21">.
 
 Our linear model takes the form:
-
 <img src="https://render.githubusercontent.com/render/math?math=y=0.37-0.29x_{1}-0.12x_{2}%2B1.44x_{3}\%2B0.08x_{4}">
 
 The model describes 65% of the variation in log price.
@@ -30,6 +29,7 @@ We investigated the relationship between price and location by mapping prices by
 ### Classification of Zip Codes by Price
 We investigated the median price by zip code in King County. We found that 98039 had the highest median price at $1,894,941 and that 98168 had the lowest median price at $235,000. For the purposes of modeling, we chose to classify zip codes as low price if their median price was in the bottom third of the distribution of median prices by zip code. Similarly, zip codes in the middle third were categorized as medium price and zip codes in the top third were categorized as high price. 
 <img src='images/zip_boxplots.png'/>
+
 ### Bathroom to Bedroom Ratio
 In the process of modeling we found that, unsurprisingly, the number of bathrooms that a house has is highly correlated with the number of bedrooms as well as the size of the house. In order to extract some useable information from the provided data, we computed the number of bathrooms per bedroom. We found that a model using number of bedrooms and number of bathrooms as predictors of log price described 28% of the variation in log price, but suffered from high variance inflation factors. Replacing number of bedrooms with the number of bathrooms per bedroom produced a model that described %26 of the variation in log price, while reducing variance inflation factors by about half and brining them within an acceptable range.
 
@@ -47,6 +47,13 @@ Our model is essentially sound. It suffers from non-normality of residuals and d
 By choosing to model the log price of houses, we achieve linear relationships between our input variables and the target. More precisely, the bottom row of the pair plot below shows that there are no strong non-linear relationships between the input variables and the target. The pair plot also shows that there are no concerning non-linear relationships between input variables, which could be missed by assessing correlation or variance inflation factors.
 <img src='images/pair_plot.png'/>
 ### Normality of Residuals
+We check for normality of residuals by inspecting both a distribution plot and a QQ plot of the residuals. We also executed a Kolmogorov–Smirnov test for normality. All three, tests reject the hypothesis that the residuals are normally distributed. However we note that the t-scores for each of our coefficients exceeds 5 in absolute value. If we were to correct the distributions used in the hypothesis tests for our coefficients, there would not be a sufficient change in the p-values produced to threaten significance. Therefore, we claim that all of our coefficients are non-zero at the 95% confidence level. 
+
+#### Residual distribution plot
+<img src='images/residual_distribution_plot.png'/>
+
+#### Residual QQ plot
+<img src='images/residual_qq_plot.png'/>
 
 ### Uniform Variance of Residuals
 
